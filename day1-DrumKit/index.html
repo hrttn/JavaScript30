@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>🥁 Drum Kit | Day 1 of 30 | JavaScript30 by WesBos</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+		<style>
+			html {
+				font-size: 10px;
+				background: url("assets/img/background.jpg") bottom center;
+				background-size: cover;
+			}
+
+			body,html {
+				margin: 0;
+				padding: 0;
+				font-family: sans-serif;
+			}
+
+			.keys {
+				display: flex;
+				flex: 1;
+				min-height: 100vh;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.key {
+				border: .4rem solid black;
+				border-radius: .5rem;
+				margin: 1rem;
+				font-size: 1.5rem;
+				padding: 1rem .5rem;
+				transition: all .07s ease;
+				width: 10rem;
+				text-align: center;
+				color: white;
+				background: rgba(0,0,0,0.4);
+				text-shadow: 0 0 .5rem black;
+			}
+
+			.playing {
+				transform: scale(1.1);
+				border-color: #ffc600;
+				box-shadow: 0 0 1rem #ffc600;
+			}
+
+			kbd {
+				display: block;
+				font-size: 4rem;
+			}
+
+			.sound {
+				font-size: 1.2rem;
+				letter-spacing: .1rem;
+				color: #ffc600;
+			}
+		</style>
+	</head>
+	<body>
+		<main id="main">
+			<article>
+					<section class="keys">
+						<div data-key="65" class="key">
+							<kbd>a</kbd>
+							<footer class="sound">clap</footer>
+						</div>
+						<div data-key="83" class="key">
+							<kbd>s</kbd>
+							<footer class="sound">hihat</footer>
+						</div>
+						<div data-key="68" class="key">
+							<kbd>d</kbd>
+							<footer class="sound">kick</footer>
+						</div>
+						<div data-key="70" class="key">
+							<kbd>f</kbd>
+							<footer class="sound">openhat</footer>
+						</div>
+						<div data-key="71" class="key">
+							<kbd>g</kbd>
+							<footer class="sound">boom</footer>
+						</div>
+						<div data-key="72" class="key">
+							<kbd>h</kbd>
+							<footer class="sound">ride</footer>
+						</div>
+						<div data-key="74" class="key">
+							<kbd>j</kbd>
+							<footer class="sound">snare</footer>
+						</div>
+						<div data-key="75" class="key">
+							<kbd>k</kbd>
+							<footer class="sound">tom</footer>
+						</div>
+						<div data-key="76" class="key">
+							<kbd>l</kbd>
+							<footer class="sound">tink</footer>
+						</div>
+					</section>
+			</article>
+		</main>
+		<footer>
+			<audio data-key="65" src="assets/sounds/clap.wav">Your browser does not support the <code>audio</code> element.</audio>
+			<audio data-key="83" src="assets/sounds/hihat.wav">Your browser does not support the <code>audio</code> element.</audio>
+			<audio data-key="68" src="assets/sounds/kick.wav">Your browser does not support the <code>audio</code> element.</audio>
+			<audio data-key="70" src="assets/sounds/openhat.wav">Your browser does not support the <code>audio</code> element.</audio>
+			<audio data-key="71" src="assets/sounds/boom.wav">Your browser does not support the <code>audio</code> element.</audio>
+			<audio data-key="72" src="assets/sounds/ride.wav">Your browser does not support the <code>audio</code> element.</audio>
+			<audio data-key="74" src="assets/sounds/snare.wav">Your browser does not support the <code>audio</code> element.</audio>
+			<audio data-key="75" src="assets/sounds/tom.wav">Your browser does not support the <code>audio</code> element.</audio>
+			<audio data-key="76" src="assets/sounds/tink.wav">Your browser does not support the <code>audio</code> element.</audio>
+
+			<script>
+
+				function playSound(e) {
+
+					const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+					const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+
+					if( !audio ) return;
+
+					audio.currentTime = 0;
+					audio.play();
+					key.classList.add("playing");
+				}
+
+				function removeTransition(e) {
+					if( e.propertyName != "transform" ) return;
+
+					this.classList.remove("playing");
+				}
+
+				const keys = document.querySelectorAll( ".key" );
+				keys.forEach( key => key.addEventListener( "transitionend", removeTransition ));
+				window.addEventListener( "keydown", playSound);
+
+			</script>
+		</footer>
+	</body>
+</html>
